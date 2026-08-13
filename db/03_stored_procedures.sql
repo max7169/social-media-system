@@ -222,3 +222,52 @@ BEGIN
     WHERE Phone = @Phone;
 END;
 GO
+-- =========================
+-- 使用者註冊
+-- =========================
+CREATE OR ALTER PROCEDURE sp_CreateUser
+    @UserName NVARCHAR(50),
+    @Phone NVARCHAR(20),
+    @Email NVARCHAR(100),
+    @PasswordHash NVARCHAR(255),
+    @CoverImage NVARCHAR(500) = NULL,
+    @Biography NVARCHAR(500) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (
+        SELECT 1
+        FROM Users
+        WHERE Phone = @Phone
+    )
+    BEGIN
+        THROW 50002, 'Phone number already exists.', 1;
+    END;
+
+    INSERT INTO Users
+    (
+        UserName,
+        Phone,
+        Email,
+        PasswordHash,
+        CoverImage,
+        Biography,
+        CreatedAt,
+        UpdatedAt
+    )
+    VALUES
+    (
+        @UserName,
+        @Phone,
+        @Email,
+        @PasswordHash,
+        @CoverImage,
+        @Biography,
+        GETDATE(),
+        GETDATE()
+    );
+
+    SELECT
+        CAST(SCOPE_IDENTITY() AS INT) AS UserId;
+END;
