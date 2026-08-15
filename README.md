@@ -4,6 +4,7 @@
 
 本專案主要練習前後端分離架構、REST API、使用者登入驗證、文章 CRUD、留言功能，以及 Stored Procedure 資料庫操作。
 
+https://socilal-media-system.vercel.app/ 入口由此進入
 ---
 
 ## 📸 Screenshots
