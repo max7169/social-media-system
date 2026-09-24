@@ -74,4 +74,23 @@ public class AuthController {
                 )
         );
     }
+    @PostMapping("/logout")
+        public ResponseEntity<Map<String, String>> logout(
+                jakarta.servlet.http.HttpServletRequest request) {
+
+        var session = request.getSession(false);
+
+        if (session != null) {
+                session.invalidate();
+        }
+
+        org.springframework.security.core.context.SecurityContextHolder
+                .clearContext();
+
+        return ResponseEntity.ok(
+                Map.of("message", "Logout successful")
+        );
+    }
 }
+
+

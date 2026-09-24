@@ -818,11 +818,25 @@ const createComment = async (postId) => {
    登出
 ========================= */
 
-const logout = () => {
+const logout = async () => {
 
-  authStore.clearUser()
+  try {
 
-  router.push('/')
+    await api.post('/api/auth/logout')
+
+    console.log('登出成功')
+
+  } catch (error) {
+
+    console.error('登出 API 失敗:', error)
+
+  } finally {
+
+    authStore.clearUser()
+
+    router.push('/')
+
+  }
 
 }
 
