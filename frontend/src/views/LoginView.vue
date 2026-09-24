@@ -34,10 +34,13 @@
         </button>
       </form>
 
-      <p class="register-link">
-        還沒有帳號？
-        <RouterLink to="/register">註冊</RouterLink>
-      </p>
+     <!-- 
+        <p class="register-link">
+          還沒有帳號？
+          <RouterLink to="/register">註冊</RouterLink>
+        </p> 
+        -->
+
     </div>
   </div>
 </template>

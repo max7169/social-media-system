@@ -56,4 +56,8 @@ public class UserService {
 
         return user;
     }
+
+    public User getCurrentUser(String phone) {
+    return userRepository.getUserByPhone(phone);
+    }
 }

@@ -117,11 +117,13 @@
 
           <div class="profile-actions">
 
-            <button
-              @click="startEdit"
-            >
-              編輯個人資料
-            </button>
+          <!-- 
+          <button
+            @click="startEdit"
+          >
+            編輯個人資料
+          </button> 
+          -->
 
           </div>
 
@@ -174,51 +176,41 @@ const errorMessage = ref('')
 ========================= */
 
 const loadProfile = async () => {
-
-  if (!authStore.user) {
-
-    router.push('/login')
-
-    return
-
-  }
-
-
+  alert('新版 ProfileView 正在執行！')
   try {
 
     loading.value = true
-
     errorMessage.value = ''
 
-
-    /*
-      這裡使用目前登入者的 UserId
-    */
-
-    const response =
-      await api.get(
-        `/api/users/${authStore.user.userId}`
-      )
-
+    const response = await api.get('/api/users/me')
 
     console.log(
       '個人資料:',
       response.data
     )
 
+    user.value = response.data
 
-    user.value =
-      response.data
-
+    // 順便同步 Pinia
+    authStore.setUser(response.data)
 
   } catch (error) {
 
     console.error(error)
 
+    if (error.response?.status === 401) {
+
+      authStore.clearUser()
+
+      router.push('/')
+
+      return
+
+    }
+
     errorMessage.value =
       error.response?.data?.message ||
       '無法取得個人資料'
-
 
   } finally {
 
