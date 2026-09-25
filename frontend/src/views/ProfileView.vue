@@ -176,13 +176,13 @@ const errorMessage = ref('')
 ========================= */
 
 const loadProfile = async () => {
-  alert('新版 ProfileView 正在執行！')
+  console.log('API Base URL:', api.defaults.baseURL)
+console.log('目前網址:', window.location.href)
   try {
 
     loading.value = true
     errorMessage.value = ''
-console.log('API Base URL:', api.defaults.baseURL)
-console.log('目前網址:', window.location.href)
+
     const response = await api.get('/api/users/me')
 
     console.log(
